@@ -8,7 +8,7 @@ export default function Splash({change}){
     }, 3000);
     const {width, height} = useWindowDimensions()
     return(
-        <LinearGradient colors={['#7440AE','#312537' ]} style={styles.container}>
+        <LinearGradient colors={['#301c44','#301c44' ]} style={styles.container}>
             <Image contentFit="contain" style={styles.Logo} source={Logo}/>
         </LinearGradient>
     )

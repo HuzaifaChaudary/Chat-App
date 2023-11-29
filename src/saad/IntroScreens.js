@@ -5,7 +5,7 @@ import { LinearGradient } from "expo-linear-gradient";
 
 export default function IntroScreens({item}) {
   return (
-    <LinearGradient colors={["#7440AE", "#312537"]} style={styles.Container}>
+    <LinearGradient colors={["#301c44", "#301c44"]} style={styles.Container}>
       <Image source={item.image} style={styles.Image} />
       {item.text}
       {/* <Button/> */}

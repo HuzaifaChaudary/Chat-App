@@ -1,10 +1,11 @@
 // UserSettings.js
 import React from 'react';
-import BeAlistener from '../components/ContainerScreens/BeAlistener';
-import MainUserSettingOption from '../components/ContainerScreens/MainUserSettingOption';
+import BeAlistener from '../components/ContainerScreens/User/BeAlistener';
+import MainUserSettingOption from '../components/ContainerScreens/User/MainUserSettingOption';
+import MainListenerSettingOption from '../components/ContainerScreens/Listener/MainListenerSettingOption';
 
-export default function UserSettings({ open }) {
+export default function UserSettings({ open,setOpen }) {
     return open ? (
-        <MainUserSettingOption open={open}/>
+        <MainListenerSettingOption setOpen={setOpen} open={open}/>
     ) : null;
 }

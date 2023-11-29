@@ -20,10 +20,16 @@
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.icecubesaad.chats"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "fd47c11c-30d6-4131-b6d3-f7dc1428940e"
+      }
     }
   }
 }

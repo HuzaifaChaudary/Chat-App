@@ -1,7 +1,9 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import { View, Text, TouchableOpacity } from 'react-native';
-export default function DeleteAccountC({open}){
+import Modal from 'react-native-modal'
+export default function DeleteAccountC({open,setOpen}){
     return (
+        <Modal isVisible={open} animationIn={"slideInUp"} style={{display:"flex",justifyContent:"center",alignItems:"center"}} backdropColor="transparent" onBackdropPress={()=>{setOpen(false)}}>
         <LinearGradient
             colors={['#2A0955', 'rgba(42, 9, 85, 0.00)']}
             start={{ x: 0, y: 0.5 }} // Gradient starts from the left
@@ -29,9 +31,10 @@ permently delete.
 Do you really want to delete account?
             </Text>
             <View style={{display:"flex",gap:10,flexDirection:"row",position:"absolute",bottom:20,right:0}}>
-                <TouchableOpacity onPress={()=>{open(false)}} style={{width:"auto" ,display:"flex",justifyContent:"center",alignItems:"center" , height:30, backgroundColor:"#C0A7D8",borderRadius:10,paddingLeft:10,paddingRight:10}}><Text>Delete</Text></TouchableOpacity>
-                <TouchableOpacity onPress={()=>{open(false)}} style={{width:"auto", display:"flex",justifyContent:"center",alignItems:"center" , height:30, backgroundColor:"#C0A7D8",borderRadius:10,paddingLeft:10,paddingRight:10}}><Text>Cancel</Text></TouchableOpacity>
+                <TouchableOpacity onPress={()=>{setOpen(false)}} style={{width:"auto" ,display:"flex",justifyContent:"center",alignItems:"center" , height:30, backgroundColor:"#C0A7D8",borderRadius:10,paddingLeft:10,paddingRight:10}}><Text>Delete</Text></TouchableOpacity>
+                <TouchableOpacity onPress={()=>{setOpen(false)}} style={{width:"auto", display:"flex",justifyContent:"center",alignItems:"center" , height:30, backgroundColor:"#C0A7D8",borderRadius:10,paddingLeft:10,paddingRight:10}}><Text>Cancel</Text></TouchableOpacity>
             </View>
         </LinearGradient>
+        </Modal>
     );
 }

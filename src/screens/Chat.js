@@ -1,98 +1,133 @@
-import React, { useState, useEffect, useRef } from "react";
-import {
-  View,
-  Text,
-  ActivityIndicator,
-  StyleSheet,
-  Animated,
-  Image,
-  Pressable,
-  TouchableOpacity,
-} from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet, TouchableOpacity, Image, ImageBackground, Modal, TextInput, Animated, ActivityIndicator, ScrollView } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
-// import Entypo from "@expo/vector-icons/Entypo";
 import Icon from "@expo/vector-icons/MaterialIcons";
-import { ScrollView } from "react-native-gesture-handler";
 import Profiles from "../components/Profiles";
 import Messages from "../components/Messages";
+import { Ionicons } from '@expo/vector-icons';
+
 
 const Chat = (props) => {
-  const URL = `https://api.github.com/users`;
+  const [showSearchPopup, setShowSearchPopup] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedGender, setSelectedGender] = useState(null); // Add this line
 
-  const pan = useRef(new Animated.ValueXY()).current;
-  const list = useRef(new Animated.ValueXY()).current;
+  // ... (rest of the code)
+  const customNames = ["Alex", "Adil", "Marina", "Dean", "Max"];
 
-  useEffect(function () {
+  const handleGenderSelection = (gender) => {
+    setSelectedGender(gender);
+  };
+  useEffect(() => {
     const getData = async () => {
-      const resp = await fetch(URL);
-      const data = await resp.json();
-      setData(data);
-      setLoading(false);
+      try {
+        const resp = await fetch('https://api.github.com/users');
+        const data = await resp.json();
+        setData(data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
     };
     getData();
-
-    Animated.timing(pan, {
-      toValue: { x: -400, y: 0 },
-      delay: 1000,
-      useNativeDriver: false,
-    }).start();
-
-    Animated.timing(list, {
-      toValue: { x: 0, y: -300 },
-      delay: 2000,
-      useNativeDriver: false,
-    }).start();
   }, []);
 
-  console.log(data.login);
+  const handleSearch = () => {
+    // Handle search logic here
+    console.log('Search query:', searchQuery);
+    setShowSearchPopup(false);
+  };
+
+  const MessagesComponent = ({ username, uri, count, onPress }) => {
+    return (
+      <TouchableOpacity onPress={onPress}>
+        <View style={styles.messageContainer}>
+          <Image source={{ uri: uri }} style={styles.avatar} />
+          <View style={styles.textContainer}>
+            <Text style={[styles.username, { color: "#FFF" }]}>{username}</Text>
+            {count > 0 && (
+              <View style={styles.unreadCountContainer}>
+                <Text style={styles.unreadCount}>{count}</Text>
+              </View>
+            )}
+            <TouchableOpacity style={styles.additionalUnreadButton} onPress={() => {/* Add functionality for the button */ }}>
+              <Image source={require("../../assets/Vector.png")} style={styles.additionalUnreadImage} />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <LinearGradient
-      colors={["purple", "purple", "purple"]}
+      colors={["#301c44", "#301c44"]}
       style={styles.gradient}
     >
       <View style={styles.headerContainer}>
-        <Icon name="search" color="#fff" size={30} />
-        <Text style={styles.header} >Chat</Text>
-        <TouchableOpacity onPress={() => { props.navigation.navigate('Payment') }}>
 
+        <ImageBackground
+          source={require('../../assets/Tab-bg.png')}
+          style={styles.iconBackground}
+        >
+
+          <TouchableOpacity onPress={() => setShowSearchPopup(true)}>
+            <Image
+              source={require('../../assets/Searches.png')}
+              style={styles.icon}
+            />
+
+          </TouchableOpacity>
+
+        </ImageBackground>
+        <View>
+
+        </View>
+
+
+        <Text style={styles.header}>Chat</Text>
+        <TouchableOpacity onPress={() => { props.navigation.navigate('Payment') }}>
           <Icon name="account-balance-wallet" color="#fff" size={30} />
         </TouchableOpacity>
 
+
       </View>
-      <ScrollView
-        horizontal
-        style={styles.proContainer}
-        showsHorizontalScrollIndicator={false}
-      >
+      <Text style={styles.previouslyContactedText}>Previously Contacted</Text>
+
+
+
+      <ScrollView horizontal style={styles.proContainer} showsHorizontalScrollIndicator={false}>
         {loading ? (
           <ActivityIndicator size="small" color="#FFF" />
         ) : (
-          <Animated.View style={[pan.getLayout(), styles.card]}>
-            {data.map((item, index) => (
-              <Profiles
-                key={item.id}
-                username={item.login}
-                uri={item.avatar_url}
-              />
+          <View style={styles.card} >
+            {data.map((item) => (
+              <Profiles key={item.id} username={item.login} uri={item.avatar_url} />
             ))}
-          </Animated.View>
+          </View>
         )}
       </ScrollView>
+
       <View style={styles.ops}>
-        <View style={styles.col}>
-          {/* <Text style={styles.day}>Sunday</Text> */}
-          {/* <Entypo name="dots-three-horizontal" color="#000119" size={30} /> */}
-        </View>
+        <View style={styles.col}></View>
         <ScrollView>
           {loading ? (
             <ActivityIndicator size="large" color="#f20042" />
           ) : (
-            <Animated.View style={[list.getLayout(), styles.list]}>
-              {data.map((item, index) => (
-                <Messages
+            <View style={styles.list}>
+
+              {/* Add centered image */}
+              <Image
+                source={require("../../assets/Group5.png")}
+                style={styles.centeredImage}
+              />
+
+
+              {/* Render MessagesComponents */}
+              {data.map((item) => (
+                <MessagesComponent
                   key={item.id}
                   username={item.login}
                   uri={item.avatar_url}
@@ -102,27 +137,133 @@ const Chat = (props) => {
                       itemId: item.id,
                       itemName: item.login,
                       itemPic: item.avatar_url,
+
                     });
                   }}
                 />
               ))}
-            </Animated.View>
+
+            </View>
+
           )}
         </ScrollView>
       </View>
-    </LinearGradient>
+
+
+      <Modal
+        animationType="none"
+        transparent={true}
+        visible={showSearchPopup}
+        onRequestClose={() => setShowSearchPopup(false)}
+      >
+        <View style={[styles.popupContainer, { padding: 30, marginTop: 0 }]}>
+          <View style={styles.inputContainer}>
+            <Ionicons name="search" size={24} color="black" style={styles.icon} />
+            <TextInput
+              style={styles.input}
+              value={searchQuery}
+              onChangeText={(text) => setSearchQuery(text)}
+              placeholder="Enter search query"
+              placeholderTextColor="white"
+              backgroundColor="white"
+              fontWeight="bold"
+              textAlign="center"
+              color="black"
+            />
+          </View>
+          <Text style={{ justifyContent: 'center', alignItems: 'center', textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 20 }}>OR</Text>
+          <Text style={{ justifyContent: 'center', alignItems: 'center', textAlign: 'center', color: 'rgba(192, 167, 216, 1)', fontWeight: 'bold', fontSize: 20, marginTop: 20 }}>Find your Supporter</Text>
+          <Text style={{ justifyContent: 'center', alignItems: 'center', textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 15, marginTop: 20 }}>Who would you like to talk to?</Text>
+
+          <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 20 }}>
+            <TouchableOpacity
+              style={{
+                alignItems: 'center',
+                marginRight: 20,
+              }}
+              onPress={() => handleGenderSelection('Male')}
+            >
+              <Image source={require('../../assets/Frame.png')} style={{ width: 50, height: 50, marginBottom: 5 }} />
+              <Text style={{ color: 'white', marginTop: 5 }}>Male</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={{
+                alignItems: 'center',
+              }}
+              onPress={() => handleGenderSelection('Female')}
+            >
+              <Image source={require('../../assets/Frame2.png')} style={{ width: 50, height: 50, marginBottom: 5 }} />
+              <Text style={{ color: 'white', marginTop: 5 }}>Female</Text>
+            </TouchableOpacity>
+          </View>
+
+          {selectedGender && (
+            <>
+              <Text style={{ justifyContent: 'center', alignItems: 'center', textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 15, marginTop: 20 }}>What should be supporter age?</Text>
+              <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 20 }}>
+                <TouchableOpacity
+                  style={{
+                    alignItems: 'center',
+                    marginRight: 20,
+                  }}
+                  onPress={() => handleSupporterAgeSelection('Button 1')}
+                >
+                  <Image source={require('../../assets/Ellipse.png')} style={{ width: 50, height: 50, marginBottom: 5, borderRadius: 40 }} />
+                  <Image source={require('../../assets/munda.png')} style={{ width: 30, height: 30, position: 'absolute', top: 15 }} />
+                  <Text style={{ color: 'white', marginTop: 5 }}>21-30 yrs</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={{
+                    alignItems: 'center',
+                    marginRight: 20,
+                  }}
+                  onPress={() => handleSupporterAgeSelection('Button 2')}
+                >
+                  <Image source={require('../../assets/Ellipse.png')} style={{ width: 50, height: 50, marginBottom: 5, borderRadius: 40 }} />
+                  <Image source={require('../../assets/munda.png')} style={{ width: 30, height: 30, position: 'absolute', top: 15 }} />
+                  <Text style={{ color: 'white', marginTop: 5 }}>31-40 yrs</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={{
+                    alignItems: 'center',
+                  }}
+                  onPress={() => handleSupporterAgeSelection('Button 3')}
+                >
+                  <Image source={require('../../assets/Ellipse.png')} style={{ width: 50, height: 50, marginBottom: 5, borderRadius: 40 }} />
+                  <Image source={require('../../assets/munda.png')} style={{ width: 30, height: 30, position: 'absolute', top: 15 }} />
+                  <Text style={{ color: 'white', marginTop: 5 }}> 40 yrs</Text>
+                </TouchableOpacity>
+              </View>
+
+              <TouchableOpacity
+                style={{ marginTop: 39, padding: 10, borderRadius: 5, backgroundColor: 'rgba(192, 167, 216, 1)', fontWeight: 'bold', width: '70%', alignSelf: 'center' }}
+              >
+                <Text style={{ color: 'white' }}>Search my Supporter</Text>
+              </TouchableOpacity>
+            </>
+          )}
+        </View>
+      </Modal>
+
+
+
+    </LinearGradient >
   );
 };
+
 export default Chat;
 
 const styles = StyleSheet.create({
-  list: {
-    marginTop: 300,
-  },
   card: {
-    marginLeft: 400,
-    width: 400,
+    marginLeft: 0, // Adjust the marginLeft to bring profiles to the left
     flexDirection: "row",
+  },
+  list: {
+    marginTop: 0,
+    width: '100%', // Adjust the width to ensure it takes the full width
   },
   gradient: {
     height: "115%",
@@ -137,8 +278,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     height: "15%",
-
+    marginTop: 0,
   },
+
   header: {
     fontFamily: "Montserrat_800ExtraBold",
     color: "#FFF",
@@ -147,7 +289,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'center',
     textAlign: 'center',
-    // fontWeight: 900
   },
   header2: {
     fontFamily: "Montserrat_800ExtraBold",
@@ -161,12 +302,13 @@ const styles = StyleSheet.create({
   proContainer: {
     marginRight: -20,
     alignSelf: "center",
+
   },
   ops: {
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     height: 500,
-    backgroundColor: "#FFF",
+    backgroundColor: "rgba(42, 9, 85, 1)",
     marginHorizontal: -20,
   },
   col: {
@@ -181,4 +323,119 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 20,
   },
+  messageContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ddd",
+  },
+  avatar: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginRight: 16,
+  },
+  textContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    flex: 1,
+  },
+  username: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  unreadCountContainer: {
+    backgroundColor: "white",
+    borderRadius: 10,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    marginLeft: '40%'
+
+  },
+  unreadCount: {
+    color: "rgba(164, 122, 191, 1)",
+    fontWeight: "bold",
+  },
+  leftActions: {
+    flexDirection: "row",
+  },
+  swipeButton: {
+    width: 50,
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  swipeImage: {
+    width: 25,
+    height: 25,
+  },
+  popupContainer: {
+    flex: 0.75,
+    justifyContent: 'center',
+    backgroundColor: 'rgba(42, 9, 85, 0.97)',
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 40,
+    padding: 20,
+    marginBottom: 'auto',
+
+  },
+  popupText: {
+    color: 'white',
+    fontSize: 28,
+    marginBottom: 10,
+    justifyContent: 'center',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  input: {
+    height: 40,
+    color: 'white',
+    borderColor: 'white',
+    borderWidth: 1,
+    borderRadius: 10,
+    marginBottom: 10,
+    padding: 5,
+    width: '100%',
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 5,
+    padding: 5,
+    backgroundColor: 'white'
+  },
+  icon: {
+    marginRight: 5,
+  },
+  input: {
+    flex: 1,
+  },
+
+  clearButton: {
+    position: 'absolute',
+    top: 5,
+    right: 10,
+  },
+  iconBackground: {
+    width: 45,
+    height: 45,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 20,
+    overflow: 'hidden', // This ensures that the child doesn't overflow the container
+  },
+  previouslyContactedText: {
+    color: '#fff',
+    fontSize: 12,
+  },
+  centeredImage: {
+    alignSelf: 'center',
+    marginTop: 20,  // Adjust the margin-top as needed
+    width: 45,   // Adjust the width as needed
+    height: 6,  // Adjust the height as needed
+  },
+
 });

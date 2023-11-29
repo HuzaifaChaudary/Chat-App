@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { StyleSheet } from "react-native";
 import { useCallback } from "react";
 import PaymentOptions from "./extras/PaymentOptions";
@@ -9,6 +9,7 @@ import Header from "./Header";
 import { useState } from "react";
 import Footer from "./Footer";
 import UserSettings from "./UserSettings";
+
 import {
   useFonts,
   Inter_100Thin,
@@ -23,6 +24,8 @@ import {
 } from '@expo-google-fonts/inter';
 
 import { LinearGradient } from "expo-linear-gradient";
+import UserPayment from "./User/UserPayment";
+import LockAmount from "./Listener/LockAmount";
 export default function PaymentGateway({ change }) {
   const [OpenUserSettings, setOpenUserSettings] = useState(false);
   const [CurrentComponent, setCurrentComponent] = useState(0);
@@ -45,21 +48,11 @@ export default function PaymentGateway({ change }) {
   return (
     <LinearGradient colors={["#6B41A6", "#442E59"]} style={{ height: "100%" }}>
       <Header changeScreen={change} />
-      <View style={styles.Container}>
+      <TouchableOpacity activeOpacity={1} style={styles.Container}>
         <View style={styles.ChildContainer}>
           {
             CurrentComponent === 0 ? (
-              <>
-                <View style={styles.TextContainer}>
-                  <Text style={{ ...styles.ChildContainerText, color: "black" }}>
-                    Recharged
-                  </Text>
-                  <Text style={styles.ChildContainerText}>Your Account</Text>
-                  <Text style={{ ...styles.ChildContainerText, fontSize: 30 }}>
-                    R ₹ <Text style={{ color: "red", fontSize: 30 }}>0.00</Text>
-                  </Text>
-                </View>
-              </>
+              <LockAmount/>
             ) : CurrentComponent === 1 ? (
               <PaymentOptions change={setCurrentComponent} />
             ) : CurrentComponent === 2 ? (
@@ -69,8 +62,8 @@ export default function PaymentGateway({ change }) {
             ) : null
           }
         </View>
-      </View>
-      {OpenUserSettings ? <UserSettings open={setOpenUserSettings} /> : null}
+      </TouchableOpacity>
+      {OpenUserSettings ? <UserSettings open={OpenUserSettings}  setOpen={setOpenUserSettings} /> : null}
       <Footer change={setCurrentComponent} open={setOpenUserSettings} />
     </LinearGradient>
   );

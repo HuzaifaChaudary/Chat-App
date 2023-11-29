@@ -76,6 +76,7 @@ const ChatStackNavigator = () => {
             <Stack.Screen name='Discussion' component={Discussion} options={{ headerShown: false, }} />
             <Stack.Screen name='NumberEnter' component={NumberEnter} options={{ headerShown: false, }} />
             <Stack.Screen name='OTP' component={OtpInput} options={{ headerShown: false, }} />
+            <Stack.Screen name='Intro' component={Home} options={{ headerShown: false, }} />
             <Stack.Screen name='Payment' component={PaymentGateway} options={{ headerShown: false, }} />
         </Stack.Navigator>
     )

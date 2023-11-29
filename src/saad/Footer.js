@@ -3,7 +3,7 @@ import { Text, View, StyleSheet } from "react-native";
 import ProfilePic from "../../assets/ProfilePic.svg";
 import Footer_Base from "../../assets/Footer.svg";
 import IndianCurrency from "../../assets/IndianCurrencyLogo.svg";
-import Tick from "../../assets/Tick.svg";
+import Tick from '../../assets/Footer.svg';
 import { TouchableOpacity } from "react-native";
 export default function Footer({ change, open }) {
   return (
@@ -20,7 +20,7 @@ export default function Footer({ change, open }) {
           width: "100%"
         }}
       >
-        <TouchableOpacity onPress={() => { console.log('open'),open(true) }} style={{ display: "flex", width: "100%", position: "absolute", justifyContent: "center", alignItems: "center" }}>
+        <TouchableOpacity onPress={() => { open(true) }} style={{ display: "flex", width: "100%", position: "absolute", justifyContent: "center", alignItems: "center" }}>
           <Image source={ProfilePic} style={{ position: "absolute", height: 60, width: 60 }} />
         </TouchableOpacity>
         <View style={styles.LeftContainer}>
