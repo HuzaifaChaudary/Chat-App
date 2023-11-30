@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, Modal, TextInput, Button } from 'react-native';
+import { View, Text, Image, StyleSheet, Modal, TextInput, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
-import Icon from '@expo/vector-icons/AntDesign';
+import { ScrollView } from 'react-native-gesture-handler';
+// import Icon from '@expo/vector-icons/AntDesign';
 import LastWatch from '../components/LastWatch';
 import Received from '../components/Received';
 import Sent from '../components/Sent';
@@ -55,6 +55,7 @@ const Discussion = ({ route, navigation }) => {
     const [amount, setAmount] = useState('');
 
     const handlePress = () => {
+
         setShowPopup(true);
     };
 
@@ -62,11 +63,12 @@ const Discussion = ({ route, navigation }) => {
         // Handle the submission logic here
         console.log('Amount submitted:', amount);
         setShowPopup(false);
+        navigation.navigate('Profiles')
     };
 
     return (
         <LinearGradient
-            colors={["#301c44", "#301c44"]}
+            colors={["white", "white", "white"]}
             style={styles.container}
         >
             <View style={styles.main}>
