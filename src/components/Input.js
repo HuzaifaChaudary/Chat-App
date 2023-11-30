@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { View, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
+import { TouchableOpacity, TextInput, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
