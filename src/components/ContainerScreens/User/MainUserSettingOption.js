@@ -12,15 +12,37 @@ import ProfliePic from '../../../../assets/ProfilePic.svg'
 import BeAlistenerC from './BeAlistener'
 import { useState,useRef,useEffect } from 'react'
 import DeleteAccountC from './DeleteAccount'
-export default function MainUserSettingOption({ open }) {
+import Modal from "react-native-modal";
+export default function MainUserSettingOption({ open,setOpen }) {
     const [OpenBeAListener, setOpenBeAListener] = useState(false);
     const [OpenDeleteAccount, setOpenDeleteAccount] = useState(false);
 
     return (
-        <View style={{ backgroundColor: "rgba(42, 9, 85, 0.9)", height: "80%", borderTopLeftRadius: 50, borderTopRightRadius: 50, zIndex: 999, paddingTop: 40, display: "flex", alignItems: "center", position: "absolute", bottom: 0, width: "100%" }}>
-            {OpenBeAListener?<BeAlistenerC open={setOpenBeAListener}/>:null}
-            {OpenDeleteAccount?<DeleteAccountC open={setOpenDeleteAccount}/>:null}
-            <TouchableOpacity onPress={() => open(false)} ><Image source={back} style={{ width: 25, height: 25 }} /></TouchableOpacity>
+        <Modal
+      style={{
+        backgroundColor: "rgba(54,24,94,0.9)",
+        height: "80%",
+        borderTopLeftRadius: 50,
+        borderTopRightRadius: 50,
+        zIndex: 999,
+        paddingTop: 40,
+        display: "flex",
+        alignItems: "center",
+        position: "absolute",
+        bottom: -20,
+        margin:"auto",
+        width: "100%",
+        paddingBottom:40
+      }}
+      animationIn={"slideInUp"}
+      isVisible={open}
+      onBackdropPress={()=>{setOpen(false)}}
+      animationOut={"slideOutDown"}
+      animationOutTiming={300}
+      backdropColor="rgba(217, 217, 217, 0.70)"
+    >
+            <BeAlistenerC open={OpenBeAListener} setOpen={setOpenBeAListener} />
+            <DeleteAccountC open={OpenDeleteAccount} setOpen={setOpenDeleteAccount} />
             <View style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                 <Image source={ProfliePic} style={{ width: 100, height: 100 }} />
                 <Text style={{ color: "white" }}>User</Text>
@@ -62,6 +84,6 @@ export default function MainUserSettingOption({ open }) {
                 <TouchableOpacity onPress={()=>{setOpenDeleteAccount(true)}} style={{ width: 60, height: 60, display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "#724D95", borderRadius: 100 }}><Image source={DeleteAccount} style={{ width: 32, height: 32 }} /></TouchableOpacity>
                 <Text style={{ color: "white" }}>Delete Account</Text>
             </View>
-        </View>
+        </Modal>
     )
 }

@@ -1,8 +1,9 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import { View, Text, TouchableOpacity } from 'react-native';
-
-export default function BeAlistenerC({open}) {
+import Modal from 'react-native-modal'
+export default function BeAlistenerC({open,setOpen}) {
     return (
+        <Modal isVisible={open} animationIn={"slideInUp"} style={{display:"flex",justifyContent:"center",alignItems:"center"}} backdropColor="transparent" onBackdropPress={()=>{setOpen(false)}}>
         <LinearGradient
             colors={['#2A0955', 'rgba(42, 9, 85, 0.00)']}
             start={{ x: 0, y: 0.5 }} // Gradient starts from the left
@@ -32,8 +33,9 @@ then you wiil be
 selected
             </Text>
             <View style={{display:"flex",flexDirection:"row",position:"absolute",bottom:20,right:20}}>
-                <TouchableOpacity onPress={()=>{open(false)}} style={{width:"auto" ,display:"flex",justifyContent:"center",alignItems:"center" , height:30, backgroundColor:"#C0A7D8",borderRadius:10,paddingLeft:20,paddingRight:20}}><Text>ok</Text></TouchableOpacity>
+                <TouchableOpacity onPress={()=>{setOpen(false)}} style={{width:"auto" ,display:"flex",justifyContent:"center",alignItems:"center" , height:30, backgroundColor:"#C0A7D8",borderRadius:10,paddingLeft:20,paddingRight:20}}><Text>ok</Text></TouchableOpacity>
             </View>
         </LinearGradient>
+        </Modal>
     );
 }

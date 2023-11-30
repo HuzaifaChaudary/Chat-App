@@ -52,7 +52,7 @@ export default function PaymentGateway({ change }) {
         <View style={styles.ChildContainer}>
           {
             CurrentComponent === 0 ? (
-              <LockAmount/>
+              <UserPayment/>
             ) : CurrentComponent === 1 ? (
               <PaymentOptions change={setCurrentComponent} />
             ) : CurrentComponent === 2 ? (

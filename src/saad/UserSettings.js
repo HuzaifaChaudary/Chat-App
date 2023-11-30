@@ -6,6 +6,6 @@ import MainListenerSettingOption from '../components/ContainerScreens/Listener/M
 
 export default function UserSettings({ open,setOpen }) {
     return open ? (
-        <MainListenerSettingOption setOpen={setOpen} open={open}/>
+        <MainUserSettingOption setOpen={setOpen} open={open}/>
     ) : null;
 }
