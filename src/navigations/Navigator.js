@@ -1,7 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
-import Home from '../screens/Home';
+import { createStackNavigator } from '@react-navigation/stack';
 import Discussion from '../screens/Discussion';
 import Profile from '../screens/Profile';
 import Chat from '../screens/Chat';
@@ -10,12 +9,31 @@ import Icon2 from '@expo/vector-icons/Entypo';
 import OtpInput from '../saad/OtpInput';
 import NumberEnter from '../saad/NumberEnter.js';
 import PaymentGateway from '../saad/PaymentGateway.js';
+import Splash from '../saad/Splash.js';
+import Home from '../screens/Home.js'
+import AllScreen from '../screens/AllScreen.js'
+import Call from '../screens/Call.js'
+import BottomNav from '../saad/bottomNav.js'
+
 
 
 const Tab = createBottomTabNavigator();
 
+
 const BottomTabNavigator = () => {
+    const handleChange = (value) => {
+        // Your logic for handling the change
+        console.log('Change:', value);
+    };
+
+    const handleOpen = (isOpen) => {
+        // Your logic for handling the open state
+        console.log('Open:', isOpen);
+    };
     return (
+
+        // <BottomNav change={handleChange} open={handleOpen} />
+
         <Tab.Navigator
             screenOptions={{
                 tabBarActiveTintColor: '#f2404c',
@@ -28,18 +46,9 @@ const BottomTabNavigator = () => {
                     elevation: 2
                 },
                 headerShown: false,
+                initialRoute: "Chat"
             }}
         >
-            <Tab.Screen
-                name='Home'
-                component={Home}
-                options={{
-                    tabBarLabel: '',
-                    tabBarIcon: ({ color, size }) => (
-                        <Icon name='ios-compass' color={color} size={30} />
-                    )
-                }}
-            />
             <Tab.Screen
                 name='Chat'
                 component={Chat}
@@ -51,8 +60,19 @@ const BottomTabNavigator = () => {
                 }}
             />
             <Tab.Screen
+                name='AllScreen'
+                component={AllScreen}
+                options={{
+                    tabBarLabel: '',
+                    tabBarIcon: ({ color, size }) => (
+                        <Icon name='ios-compass' color={color} size={30} />
+                    )
+                }}
+            />
+
+            <Tab.Screen
                 name='Incoming Call'
-                component={Profile}
+                component={Call}
                 options={{
                     tabBarLabel: '',
                     tabBarIcon: ({ color, size }) => (
@@ -60,7 +80,8 @@ const BottomTabNavigator = () => {
                     )
                 }}
             />
-        </Tab.Navigator>
+        </Tab.Navigator >
+
     );
 };
 
@@ -72,12 +93,17 @@ const screenOptionStyle = {
 const ChatStackNavigator = () => {
     return (
         <Stack.Navigator screenOptions={screenOptionStyle}>
-            <Stack.Screen name='Chat1' component={BottomTabNavigator} options={{ headerShown: false, }} />
-            <Stack.Screen name='Discussion' component={Discussion} options={{ headerShown: false, }} />
+            <Stack.Screen name='Splash' component={Splash} options={{ headerShown: false, }} />
             <Stack.Screen name='NumberEnter' component={NumberEnter} options={{ headerShown: false, }} />
             <Stack.Screen name='OTP' component={OtpInput} options={{ headerShown: false, }} />
-            <Stack.Screen name='Intro' component={Home} options={{ headerShown: false, }} />
+            <Stack.Screen name='Home' component={Home} options={{ headerShown: false, }} />
+            <Stack.Screen name='Chat1' component={BottomTabNavigator} options={{ headerShown: false, }} />
+            <Stack.Screen name='Discussion' component={Discussion} options={{ headerShown: false, }} />
             <Stack.Screen name='Payment' component={PaymentGateway} options={{ headerShown: false, }} />
+            <Stack.Screen name='AllScreen' component={AllScreen} options={{ headerShown: false, }} />
+            <Stack.Screen name='Call' component={Call} options={{ headerShown: false, }} />
+            <Stack.Screen name='Profiles' component={Profile} options={{ headerShown: false, }} />
+
         </Stack.Navigator>
     )
 }
