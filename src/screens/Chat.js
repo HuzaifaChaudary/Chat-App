@@ -3,16 +3,68 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, ImageBackground, Modal
 import { LinearGradient } from 'expo-linear-gradient';
 import Icon from "@expo/vector-icons/MaterialIcons";
 import Profiles from "../components/Profiles";
-import Messages from "../components/Messages";
+// import Messages from "../components/Messages";
 import { Ionicons } from '@expo/vector-icons';
+import { Swipeable } from "react-native-gesture-handler";
+import ChatIcon from '../../assets/Chat67.png';
+import ImageIcon from '../../assets/image68.png';
+import VideoIcon from '../../assets/video69.png';
+import PinkBackground from '../../assets/Ellipse70.png';
+import { PanResponder } from "react-native";
+import Footer from "../saad/Footer";
 
+import Footer_Base from "../../assets/Footer.svg";
+import IndianCurrency from "../../assets/IndianCurrencyLogo.svg";
+import Tick from "../../assets/Tick.svg";
+import ProfilePic from "../../assets/ProfilePic.svg";
 
 const Chat = (props) => {
   const [showSearchPopup, setShowSearchPopup] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedGender, setSelectedGender] = useState(null); // Add this line
+  const [selectedGender, setSelectedGender] = useState(null);
+  const [isSearchIconPressed, setIsSearchIconPressed] = useState(false);
+
+
+  const rightSwipe = () => {
+    return (
+      <View style={styles.rightSwipeContainer}>
+        {/* <Image source={PinkBackground} style={styles.swipeBackground} /> */}
+
+        <View style={styles.swipeIconsContainer}>
+          <View style={styles.swipeIconContainer}>
+            <ImageBackground source={PinkBackground} style={styles.iconBackground}>
+              <Image source={ChatIcon} style={styles.swipeIcon} />
+            </ImageBackground>
+            {/* Add text below the Chat icon */}
+            <Text style={styles.swipeText}>Chat</Text>
+            <Text style={styles.swipeSubText}>8₹/min</Text>
+          </View>
+
+          <View style={styles.swipeIconContainer}>
+            <ImageBackground source={PinkBackground} style={styles.iconBackground}>
+              <Image source={ImageIcon} style={styles.swipeIcon} />
+            </ImageBackground>
+            {/* Add text below the Voice Call icon */}
+            <Text style={styles.swipeText}>Voice Call</Text>
+            <Text style={styles.swipeSubText}>8₹/min</Text>
+          </View>
+
+          <View style={styles.swipeIconContainer}>
+            <ImageBackground source={PinkBackground} style={styles.iconBackground}>
+              <Image source={VideoIcon} style={styles.swipeIcon} />
+            </ImageBackground>
+            {/* Add text below the Video Call icon */}
+            <Text style={styles.swipeText}>Video Call</Text>
+            <Text style={styles.swipeSubText}>8₹/min</Text>
+          </View>
+        </View>
+      </View>
+    );
+  };
+
+
 
   // ... (rest of the code)
   const customNames = ["Alex", "Adil", "Marina", "Dean", "Max"];
@@ -31,6 +83,7 @@ const Chat = (props) => {
         console.error('Error fetching data:', error);
       }
     };
+
     getData();
   }, []);
 
@@ -42,24 +95,55 @@ const Chat = (props) => {
 
   const MessagesComponent = ({ username, uri, count, onPress }) => {
     return (
-      <TouchableOpacity onPress={onPress}>
-        <View style={styles.messageContainer}>
-          <Image source={{ uri: uri }} style={styles.avatar} />
-          <View style={styles.textContainer}>
-            <Text style={[styles.username, { color: "#FFF" }]}>{username}</Text>
-            {count > 0 && (
-              <View style={styles.unreadCountContainer}>
-                <Text style={styles.unreadCount}>{count}</Text>
+      <Swipeable renderRightActions={rightSwipe}>
+        <TouchableOpacity onPress={onPress}>
+          <View style={styles.messageContainer}>
+            <Image source={{ uri: uri }} style={styles.avatar} />
+
+            <View style={styles.textContainer}>
+              <View style={styles.columnContainer}>
+                <Text style={[styles.username, { color: "#FFF" }]}>{username}</Text>
+                <Text style={{ color: 'white', fontSize: 10, }}>How are you ?</Text>
               </View>
-            )}
-            <TouchableOpacity style={styles.additionalUnreadButton} onPress={() => {/* Add functionality for the button */ }}>
-              <Image source={require("../../assets/Vector.png")} style={styles.additionalUnreadImage} />
-            </TouchableOpacity>
+
+              <View style={{
+                flexDirection: "column",
+                justifyContent: "space-between",
+              }}>
+                <Text style={{ color: 'white', fontSize: 10, marginBottom: 10, justifyContent: 'flex-end', textAlign: 'right' }}>2 mints ago</Text>
+                <View style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}>
+
+                  {count > 0 && (
+                    <View style={[styles.unreadCountContainer, { marginLeft: 'auto' }]}>
+                      <Text style={styles.unreadCount}>{count}</Text>
+                    </View>
+                  )}
+
+
+                  <TouchableOpacity style={styles.additionalUnreadButton} onPress={() => {/* Add functionality for the button */ }}>
+                    <ImageBackground
+                      style={[styles.additionalUnreadImage, styles.vectorBackground]}
+                    >
+                      <Image source={require("../../assets/Vector.png")} style={styles.additionalUnreadImage} />
+                    </ImageBackground>
+                  </TouchableOpacity>
+                </View>
+
+              </View>
+            </View>
           </View>
-        </View>
-      </TouchableOpacity>
+
+        </TouchableOpacity>
+
+      </Swipeable>
     );
   };
+
+
+
 
   return (
     <LinearGradient
@@ -73,13 +157,11 @@ const Chat = (props) => {
           style={styles.iconBackground}
         >
 
-          <TouchableOpacity onPress={() => setShowSearchPopup(true)}>
-            <Image
-              source={require('../../assets/Searches.png')}
-              style={styles.icon}
-            />
+          <TouchableOpacity onPress={() => { setShowSearchPopup(true); setIsSearchIconPressed(true); }} >
+            <Image source={require('../../assets/Searches.png')} style={styles.icon} />
 
           </TouchableOpacity>
+
 
         </ImageBackground>
         <View>
@@ -87,10 +169,13 @@ const Chat = (props) => {
         </View>
 
 
-        <Text style={styles.header}>Chat</Text>
-        <TouchableOpacity onPress={() => { props.navigation.navigate('Payment') }}>
-          <Icon name="account-balance-wallet" color="#fff" size={30} />
+        <Text style={styles.header}>Inbox</Text>
+        <TouchableOpacity onPress={() => { props.navigation.navigate('Payment') }} style={{ display: 'flex', flexDirection: 'column', }}>
+          <Image source={require('../../assets/wallet.png')} />
+          <Text style={{ color: 'white', fontSize: 10, }}>10.5₹</Text>
+
         </TouchableOpacity>
+
 
 
       </View>
@@ -110,6 +195,7 @@ const Chat = (props) => {
         )}
       </ScrollView>
 
+      {/* bottom chat bullshit */}
       <View style={styles.ops}>
         <View style={styles.col}></View>
         <ScrollView>
@@ -118,14 +204,11 @@ const Chat = (props) => {
           ) : (
             <View style={styles.list}>
 
-              {/* Add centered image */}
               <Image
                 source={require("../../assets/Group5.png")}
                 style={styles.centeredImage}
               />
 
-
-              {/* Render MessagesComponents */}
               {data.map((item) => (
                 <MessagesComponent
                   key={item.id}
@@ -145,16 +228,27 @@ const Chat = (props) => {
 
             </View>
 
+
           )}
         </ScrollView>
-      </View>
 
+      </View>
 
       <Modal
         animationType="none"
         transparent={true}
         visible={showSearchPopup}
-        onRequestClose={() => setShowSearchPopup(false)}
+        onRequestClose={() => {
+          setShowSearchPopup(false);
+          setIsSearchIconPressed(false);
+        }}
+        style={{
+          backgroundColor: "white",
+          shadowColor: "red",
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.8,
+          shadowRadius: 4,
+        }}
       >
         <View style={[styles.popupContainer, { padding: 30, marginTop: 0 }]}>
           <View style={styles.inputContainer}>
@@ -347,9 +441,9 @@ const styles = StyleSheet.create({
   },
   unreadCountContainer: {
     backgroundColor: "white",
-    borderRadius: 10,
+    borderRadius: 50,
     paddingHorizontal: 8,
-    paddingVertical: 4,
+    paddingVertical: 3,
     marginLeft: '40%'
 
   },
@@ -408,7 +502,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white'
   },
   icon: {
-    marginRight: 5,
+    marginBottom: 7
   },
   input: {
     flex: 1,
@@ -419,14 +513,14 @@ const styles = StyleSheet.create({
     top: 5,
     right: 10,
   },
-  iconBackground: {
-    width: 45,
-    height: 45,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 20,
-    overflow: 'hidden', // This ensures that the child doesn't overflow the container
-  },
+  // iconBackground: {
+  //   width: 45,
+  //   height: 45,
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  //   borderRadius: 20,
+  //   overflow: 'hidden', // This ensures that the child doesn't overflow the container
+  // },
   previouslyContactedText: {
     color: '#fff',
     fontSize: 12,
@@ -437,5 +531,107 @@ const styles = StyleSheet.create({
     width: 45,   // Adjust the width as needed
     height: 6,  // Adjust the height as needed
   },
+  swipeIconsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 10,
+  },
+
+  swipeIconContainer: {
+    alignItems: 'center',
+    marginHorizontal: 5, // Adjust the margin as needed
+  },
+
+
+  iconBackground: {
+    width: 37, // Adjust the width as needed
+    height: 37, // Adjust the height as needed
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 15, // Adjust the borderRadius as needed
+    overflow: 'hidden',
+  },
+
+
+  swipeIcon: {
+    width: 25,
+    height: 25,
+  },
+  swipeText: {
+    color: '#FFF',
+    fontSize: 14,
+    marginTop: 5,
+    textAlign: 'center',
+  },
+
+  swipeSubText: {
+    color: '#FFF',
+    fontSize: 12,
+    marginTop: 2,
+    textAlign: 'center',
+  },
+  additionalUnreadImage: {
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
+  vectorBackground: {
+    backgroundColor: "white",
+    borderRadius: 30,
+    paddingVertical: 6,
+    paddingHorizontal: 6,
+    marginLeft: 10, // Adjust the margin as needed
+  },
+
+  FooterContainer: {
+    flex: 1,
+    justifyContent: "space-between",
+    flexDirection: "column",
+    alignItems: "center",
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
+  FooterLogo: {
+    height: 50,
+    width: 50,
+  },
+  FooterLayer: {
+    flex: 1,
+    flexDirection: "row",
+    position: "absolute",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "100%",
+    bottom: 0,
+  },
+  BaseContainer: {
+    height: "100%",
+    // position:"absolute",
+    width: "100%",
+  },
+  MainContainer: {
+    height: "9%",
+    width: "100%",
+    backgroundColor: "transparent",
+    position: "absolute",
+    bottom: 0,
+  },
+  LeftContainer: {
+    display: "flex",
+    height: "100%",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingLeft: 40,
+    paddingTop: 10,
+  },
+  RightContainer: {
+    display: "flex",
+    height: "100%",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingTop: 10,
+    paddingRight: 40,
+  }
 
 });
