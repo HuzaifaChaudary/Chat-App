@@ -13,13 +13,27 @@ import Splash from '../saad/Splash.js';
 import Home from '../screens/Home.js'
 import AllScreen from '../screens/AllScreen.js'
 import Call from '../screens/Call.js'
+import BottomNav from '../saad/bottomNav.js'
 
 
 
 const Tab = createBottomTabNavigator();
 
+
 const BottomTabNavigator = () => {
+    const handleChange = (value) => {
+        // Your logic for handling the change
+        console.log('Change:', value);
+    };
+
+    const handleOpen = (isOpen) => {
+        // Your logic for handling the open state
+        console.log('Open:', isOpen);
+    };
     return (
+
+        // <BottomNav change={handleChange} open={handleOpen} />
+
         <Tab.Navigator
             screenOptions={{
                 tabBarActiveTintColor: '#f2404c',
@@ -66,7 +80,8 @@ const BottomTabNavigator = () => {
                     )
                 }}
             />
-        </Tab.Navigator>
+        </Tab.Navigator >
+
     );
 };
 
