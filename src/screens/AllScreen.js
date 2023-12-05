@@ -102,16 +102,18 @@ const AllScreen = (props, navigation) => {
 
                         <View style={styles.textContainer}>
                             <View style={styles.columnContainer}>
-                                <Text style={[styles.username, { color: '#FFF' }]}>{username}</Text>
+                                <Text style={[styles.username, { color: "#FFF" }]}>{username}</Text>
+                                <Text style={{ color: 'white', fontSize: 10, }}>How are you ?</Text>
                             </View>
 
                             <TouchableOpacity onPress={() => { handleTalk }}>
-                                <Text style={{ textAlign: 'center', color: 'white', fontSize: 11, marginBottom: 5 }}>English Loneliness</Text>
+                                <Text style={{ textAlign: 'center', color: 'white', fontSize: 9, marginBottom: 5 }}>English Loneliness</Text>
+                           
                                 <ImageBackground
                                     style={[styles.additionalUnreadImage, styles.vectorBackground]}
                                     source={require('../../assets/talk-bg.png')}
                                 >
-                                    <Text style={{ color: 'white' }}>Talk Now</Text>
+                                    <Text style={{ color: 'white', fontSize: 12 }}>Talk Now</Text>
                                 </ImageBackground>
                             </TouchableOpacity>
                         </View>
@@ -152,8 +154,11 @@ const AllScreen = (props, navigation) => {
 
 
                 <Text style={styles.header}>All</Text>
-                <TouchableOpacity onPress={() => { props.navigation.navigate('Payment') }}>
-                    <Icon name="account-balance-wallet" color="#fff" size={30} />
+                <TouchableOpacity onPress={() => { props.navigation.navigate('Payment') }} style={{ display: 'flex', flexDirection: 'column', }}>
+                    <Image source={require('../../assets/wallet.png')} />
+                    <Text style={{ color: 'white', fontSize: 10, }}>10.5₹</Text>
+
+
                 </TouchableOpacity>
 
 
@@ -544,7 +549,7 @@ const styles = StyleSheet.create({
     },
     vectorBackground: {
         // backgroundColor: "white",
-        paddingHorizontal: 5,
+        paddingHorizontal: 1.5,
         marginLeft: 10, // Adjust the margin as needed
     },
 
