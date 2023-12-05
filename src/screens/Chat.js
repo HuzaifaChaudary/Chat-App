@@ -171,7 +171,7 @@ const Chat = (props) => {
 
         <Text style={styles.header}>Inbox</Text>
         <TouchableOpacity onPress={() => { props.navigation.navigate('Payment') }} style={{ display: 'flex', flexDirection: 'column', }}>
-          <Image source={require('../../assets/wallet.png')} />
+          <Image source={require('../../assets/wallet1.png')} />
           <Text style={{ color: 'white', fontSize: 10, }}>10.5₹</Text>
 
         </TouchableOpacity>
