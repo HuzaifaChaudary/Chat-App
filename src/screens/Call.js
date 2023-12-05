@@ -97,6 +97,7 @@ const Call = (props) => {
                             <View style={styles.columnContainer}>
                                 <Text style={[styles.username, { color: "#FFF" }]}>{username}</Text>
                                 <Text style={{ color: 'white', fontSize: 10, }}>How are you ?</Text>
+
                             </View>
 
 
@@ -157,6 +158,7 @@ const Call = (props) => {
                 <TouchableOpacity onPress={() => { props.navigation.navigate('Payment') }} style={{ display: 'flex', flexDirection: 'column', }}>
                     <Image source={require('../../assets/wallet.png')} />
                     <Text style={{ color: 'white', fontSize: 10, }}>10.5₹</Text>
+
 
                 </TouchableOpacity>
 

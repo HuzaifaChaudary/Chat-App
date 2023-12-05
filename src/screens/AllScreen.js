@@ -108,6 +108,7 @@ const AllScreen = (props, navigation) => {
 
                             <TouchableOpacity onPress={() => { handleTalk }}>
                                 <Text style={{ textAlign: 'center', color: 'white', fontSize: 9, marginBottom: 5 }}>English Loneliness</Text>
+                           
                                 <ImageBackground
                                     style={[styles.additionalUnreadImage, styles.vectorBackground]}
                                     source={require('../../assets/talk-bg.png')}
@@ -156,6 +157,7 @@ const AllScreen = (props, navigation) => {
                 <TouchableOpacity onPress={() => { props.navigation.navigate('Payment') }} style={{ display: 'flex', flexDirection: 'column', }}>
                     <Image source={require('../../assets/wallet.png')} />
                     <Text style={{ color: 'white', fontSize: 10, }}>10.5₹</Text>
+
 
                 </TouchableOpacity>
 
