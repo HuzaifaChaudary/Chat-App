@@ -10,13 +10,6 @@ import ChatIcon from '../../assets/Chat67.png';
 import ImageIcon from '../../assets/image68.png';
 import VideoIcon from '../../assets/video69.png';
 import PinkBackground from '../../assets/Ellipse70.png';
-import { PanResponder } from "react-native";
-import Footer from "../saad/Footer";
-
-import Footer_Base from "../../assets/Footer.svg";
-import IndianCurrency from "../../assets/IndianCurrencyLogo.svg";
-import Tick from "../../assets/Tick.svg";
-import ProfilePic from "../../assets/ProfilePic.svg";
 
 const Chat = (props) => {
   const [showSearchPopup, setShowSearchPopup] = useState(false);

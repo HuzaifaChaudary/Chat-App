@@ -1,6 +1,6 @@
 import React from 'react';
 // import { View, Text } from 'react-native';
-import IncomingCall from './IncomingCall';
+import IncomingCall from './incomingCall'
 
 
 const Profile = () => {
