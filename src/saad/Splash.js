@@ -3,9 +3,9 @@ import Logo from '../../assets/Logo.svg'
 import {Image} from 'expo-image'
 import { LinearGradient } from "expo-linear-gradient";
 export default function Splash({change}){
-    setTimeout(() => {
-        change(1)
-    }, 3000);
+    // setTimeout(() => {
+    //     change(1)
+    // }, 3000);
     const {width, height} = useWindowDimensions()
     return(
         <LinearGradient colors={['#301c44','#301c44' ]} style={styles.container}>

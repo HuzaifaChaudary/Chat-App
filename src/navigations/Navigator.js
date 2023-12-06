@@ -93,10 +93,10 @@ const screenOptionStyle = {
 const ChatStackNavigator = () => {
     return (
         <Stack.Navigator screenOptions={screenOptionStyle}>
-            <Stack.Screen name='Splash' component={Splash} options={{ headerShown: false, }} />
+            {/* <Stack.Screen name='Splash' component={Splash} options={{ headerShown: false, }} />
             <Stack.Screen name='NumberEnter' component={NumberEnter} options={{ headerShown: false, }} />
             <Stack.Screen name='OTP' component={OtpInput} options={{ headerShown: false, }} />
-            <Stack.Screen name='Home' component={Home} options={{ headerShown: false, }} />
+            <Stack.Screen name='Home' component={Home} options={{ headerShown: false, }} /> */}
             <Stack.Screen name='Chat1' component={BottomTabNavigator} options={{ headerShown: false, }} />
             <Stack.Screen name='Discussion' component={Discussion} options={{ headerShown: false, }} />
             <Stack.Screen name='Payment' component={PaymentGateway} options={{ headerShown: false, }} />
