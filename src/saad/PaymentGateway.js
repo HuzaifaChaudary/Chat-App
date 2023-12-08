@@ -21,12 +21,12 @@ import {
   Inter_700Bold,
   Inter_800ExtraBold,
   Inter_900Black,
-} from '@expo-google-fonts/inter';
+} from "@expo-google-fonts/inter";
 
 import { LinearGradient } from "expo-linear-gradient";
 import UserPayment from "./User/UserPayment";
 import LockAmount from "./Listener/LockAmount";
-export default function PaymentGateway({ change }) {
+export default function PaymentGateway({ change, navigation }) {
   const [OpenUserSettings, setOpenUserSettings] = useState(false);
   const [CurrentComponent, setCurrentComponent] = useState(0);
   let [fontsLoaded] = useFonts({
@@ -47,24 +47,22 @@ export default function PaymentGateway({ change }) {
 
   return (
     <LinearGradient colors={["#6B41A6", "#442E59"]} style={{ height: "100%" }}>
-      <Header changeScreen={change} />
       <TouchableOpacity activeOpacity={1} style={styles.Container}>
         <View style={styles.ChildContainer}>
-          {
-            CurrentComponent === 0 ? (
-              <UserPayment/>
-            ) : CurrentComponent === 1 ? (
-              <PaymentOptions change={setCurrentComponent} />
-            ) : CurrentComponent === 2 ? (
-              <Transaction change={setCurrentComponent} />
-            ) : CurrentComponent === 3 ? (
-              <FInalREchargedScreen />
-            ) : null
-          }
+          {CurrentComponent === 0 ? (
+            navigation.navigate("UserPayment")
+          ) : CurrentComponent === 1 ? (
+            <PaymentOptions change={setCurrentComponent} />
+          ) : CurrentComponent === 2 ? (
+            <Transaction change={setCurrentComponent} />
+          ) : CurrentComponent === 3 ? (
+            <FInalREchargedScreen />
+          ) : null}
         </View>
       </TouchableOpacity>
-      {OpenUserSettings ? <UserSettings open={OpenUserSettings}  setOpen={setOpenUserSettings} /> : null}
-      <Footer change={setCurrentComponent} open={setOpenUserSettings} />
+      {OpenUserSettings ? (
+        <UserSettings open={OpenUserSettings} setOpen={setOpenUserSettings} />
+      ) : null}
     </LinearGradient>
   );
 }
@@ -72,12 +70,12 @@ const styles = StyleSheet.create({
   Container: {
     height: "100%",
     backgroundColor: "#7440AE",
-    display:"flex",
-    justifyContent:"flex-end"
+    display: "flex",
+    justifyContent: "flex-end",
   },
   ChildContainer: {
     height: "90%",
-    backgroundColor:"#A47ABF",
+    backgroundColor: "#A47ABF",
     borderTopRightRadius: 40,
     borderTopLeftRadius: 40,
   },
@@ -89,6 +87,6 @@ const styles = StyleSheet.create({
   TextContainer: {
     marginLeft: "auto",
     marginRight: "auto",
-    marginTop:120
+    marginTop: 120,
   },
 });

@@ -1,24 +1,39 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image, ImageBackground, Modal, TextInput, Animated, ActivityIndicator, ScrollView } from "react-native";
-import { LinearGradient } from 'expo-linear-gradient';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  ImageBackground,
+  Modal,
+  TextInput,
+  Animated,
+  ActivityIndicator,
+  ScrollView,
+  Dimensions,
+} from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import Icon from "@expo/vector-icons/MaterialIcons";
 import Profiles from "../components/Profiles";
 // import Messages from "../components/Messages";
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
 import { Swipeable } from "react-native-gesture-handler";
-import ChatIcon from '../../assets/Chat67.png';
-import ImageIcon from '../../assets/image68.png';
-import VideoIcon from '../../assets/video69.png';
-import PinkBackground from '../../assets/Ellipse70.png';
+import ChatIcon from "../../assets/Chat67.png";
+import ImageIcon from "../../assets/image68.png";
+import VideoIcon from "../../assets/video69.png";
+import PinkBackground from "../../assets/Ellipse70.png";
+
+const screenWidth = Dimensions.get("screen").width;
+const screenHeight = Dimensions.get("screen").height;
 
 const Chat = (props) => {
   const [showSearchPopup, setShowSearchPopup] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedGender, setSelectedGender] = useState(null);
   const [isSearchIconPressed, setIsSearchIconPressed] = useState(false);
-
 
   const rightSwipe = () => {
     return (
@@ -27,7 +42,10 @@ const Chat = (props) => {
 
         <View style={styles.swipeIconsContainer}>
           <View style={styles.swipeIconContainer}>
-            <ImageBackground source={PinkBackground} style={styles.iconBackground}>
+            <ImageBackground
+              source={PinkBackground}
+              style={styles.iconBackground}
+            >
               <Image source={ChatIcon} style={styles.swipeIcon} />
             </ImageBackground>
             {/* Add text below the Chat icon */}
@@ -36,7 +54,10 @@ const Chat = (props) => {
           </View>
 
           <View style={styles.swipeIconContainer}>
-            <ImageBackground source={PinkBackground} style={styles.iconBackground}>
+            <ImageBackground
+              source={PinkBackground}
+              style={styles.iconBackground}
+            >
               <Image source={ImageIcon} style={styles.swipeIcon} />
             </ImageBackground>
             {/* Add text below the Voice Call icon */}
@@ -45,7 +66,10 @@ const Chat = (props) => {
           </View>
 
           <View style={styles.swipeIconContainer}>
-            <ImageBackground source={PinkBackground} style={styles.iconBackground}>
+            <ImageBackground
+              source={PinkBackground}
+              style={styles.iconBackground}
+            >
               <Image source={VideoIcon} style={styles.swipeIcon} />
             </ImageBackground>
             {/* Add text below the Video Call icon */}
@@ -57,8 +81,6 @@ const Chat = (props) => {
     );
   };
 
-
-
   // ... (rest of the code)
   const customNames = ["Alex", "Adil", "Marina", "Dean", "Max"];
 
@@ -68,12 +90,12 @@ const Chat = (props) => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const resp = await fetch('https://api.github.com/users');
+        const resp = await fetch("https://api.github.com/users");
         const data = await resp.json();
         setData(data);
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
     };
 
@@ -82,7 +104,7 @@ const Chat = (props) => {
 
   const handleSearch = () => {
     // Handle search logic here
-    console.log('Search query:', searchQuery);
+    console.log("Search query:", searchQuery);
     setShowSearchPopup(false);
   };
 
@@ -95,94 +117,124 @@ const Chat = (props) => {
 
             <View style={styles.textContainer}>
               <View style={styles.columnContainer}>
-                <Text style={[styles.username, { color: "#FFF" }]}>{username}</Text>
-                <Text style={{ color: 'white', fontSize: 10, }}>How are you ?</Text>
+                <Text style={[styles.username, { color: "#FFF" }]}>
+                  {username}
+                </Text>
+                <Text style={{ color: "white", fontSize: 10 }}>
+                  How are you ?
+                </Text>
               </View>
 
-              <View style={{
-                flexDirection: "column",
-                justifyContent: "space-between",
-              }}>
-                <Text style={{ color: 'white', fontSize: 10, marginBottom: 10, justifyContent: 'flex-end', textAlign: 'right' }}>2 mints ago</Text>
-                <View style={{
-                  flexDirection: "row",
+              <View
+                style={{
+                  flexDirection: "column",
                   justifyContent: "space-between",
-                }}>
-
+                }}
+              >
+                <Text
+                  style={{
+                    color: "white",
+                    fontSize: 10,
+                    marginBottom: 10,
+                    justifyContent: "flex-end",
+                    textAlign: "right",
+                  }}
+                >
+                  2 mints ago
+                </Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                  }}
+                >
                   {count > 0 && (
-                    <View style={[styles.unreadCountContainer, { marginLeft: 'auto' }]}>
+                    <View
+                      style={[
+                        styles.unreadCountContainer,
+                        { marginLeft: "auto" },
+                      ]}
+                    >
                       <Text style={styles.unreadCount}>{count}</Text>
                     </View>
                   )}
 
-
-                  <TouchableOpacity style={styles.additionalUnreadButton} onPress={() => {/* Add functionality for the button */ }}>
+                  <TouchableOpacity
+                    style={styles.additionalUnreadButton}
+                    onPress={() => {
+                      /* Add functionality for the button */
+                    }}
+                  >
                     <ImageBackground
-                      style={[styles.additionalUnreadImage, styles.vectorBackground]}
+                      style={[
+                        styles.additionalUnreadImage,
+                        styles.vectorBackground,
+                      ]}
                     >
-                      <Image source={require("../../assets/Vector.png")} style={styles.additionalUnreadImage} />
+                      <Image
+                        source={require("../../assets/Vector.png")}
+                        style={styles.additionalUnreadImage}
+                      />
                     </ImageBackground>
                   </TouchableOpacity>
                 </View>
-
               </View>
             </View>
           </View>
-
         </TouchableOpacity>
-
       </Swipeable>
     );
   };
 
-
-
-
   return (
-    <LinearGradient
-      colors={["#301c44", "#301c44"]}
-      style={styles.gradient}
-    >
+    <LinearGradient colors={["#301c44", "#301c44"]} style={styles.gradient}>
       <View style={styles.headerContainer}>
-
         <ImageBackground
-          source={require('../../assets/Tab-bg.png')}
+          source={require("../../assets/Tab-bg.png")}
           style={styles.iconBackground}
         >
-
-          <TouchableOpacity onPress={() => { setShowSearchPopup(true); setIsSearchIconPressed(true); }} >
-            <Image source={require('../../assets/Searches.png')} style={styles.icon} />
-
+          <TouchableOpacity
+            onPress={() => {
+              setShowSearchPopup(true);
+              setIsSearchIconPressed(true);
+            }}
+          >
+            <Image
+              source={require("../../assets/Searches.png")}
+              style={styles.icon}
+            />
           </TouchableOpacity>
-
-
         </ImageBackground>
-        <View>
-
-        </View>
-
 
         <Text style={styles.header}>Inbox</Text>
-        <TouchableOpacity onPress={() => { props.navigation.navigate('Payment') }} style={{ display: 'flex', flexDirection: 'column', }}>
-          <Image source={require('../../assets/wallet.png')} />
-          <Text style={{ color: 'white', fontSize: 10, }}>10.5₹</Text>
-
+        <TouchableOpacity
+          onPress={() => {
+            props.navigation.navigate("Payment");
+          }}
+          style={{ display: "flex", flexDirection: "column" }}
+        >
+          <Image source={require("../../assets/wallet.png")} />
+          <Text style={{ color: "white", fontSize: 10 }}>10.5₹</Text>
         </TouchableOpacity>
-
-
-
       </View>
+
       <Text style={styles.previouslyContactedText}>Previously Contacted</Text>
 
-
-
-      <ScrollView horizontal style={styles.proContainer} showsHorizontalScrollIndicator={false}>
+      <ScrollView
+        horizontal
+        style={styles.proContainer}
+        showsHorizontalScrollIndicator={false}
+      >
         {loading ? (
           <ActivityIndicator size="small" color="#FFF" />
         ) : (
-          <View style={styles.card} >
+          <View style={styles.card}>
             {data.map((item) => (
-              <Profiles key={item.id} username={item.login} uri={item.avatar_url} />
+              <Profiles
+                key={item.id}
+                username={item.login}
+                uri={item.avatar_url}
+              />
             ))}
           </View>
         )}
@@ -196,7 +248,6 @@ const Chat = (props) => {
             <ActivityIndicator size="large" color="#f20042" />
           ) : (
             <View style={styles.list}>
-
               <Image
                 source={require("../../assets/Group5.png")}
                 style={styles.centeredImage}
@@ -213,18 +264,16 @@ const Chat = (props) => {
                       itemId: item.id,
                       itemName: item.login,
                       itemPic: item.avatar_url,
-
                     });
                   }}
                 />
               ))}
-
             </View>
-
-
           )}
         </ScrollView>
-
+        <View style={{ backgroundColor: "red", postMessage: "absolute" }}>
+          <Text> hello there</Text>
+        </View>
       </View>
 
       <Modal
@@ -245,7 +294,12 @@ const Chat = (props) => {
       >
         <View style={[styles.popupContainer, { padding: 30, marginTop: 0 }]}>
           <View style={styles.inputContainer}>
-            <Ionicons name="search" size={24} color="black" style={styles.icon} />
+            <Ionicons
+              name="search"
+              size={24}
+              color="black"
+              style={styles.icon}
+            />
             <TextInput
               style={styles.input}
               value={searchQuery}
@@ -258,86 +312,208 @@ const Chat = (props) => {
               color="black"
             />
           </View>
-          <Text style={{ justifyContent: 'center', alignItems: 'center', textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 20 }}>OR</Text>
-          <Text style={{ justifyContent: 'center', alignItems: 'center', textAlign: 'center', color: 'rgba(192, 167, 216, 1)', fontWeight: 'bold', fontSize: 20, marginTop: 20 }}>Find your Supporter</Text>
-          <Text style={{ justifyContent: 'center', alignItems: 'center', textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 15, marginTop: 20 }}>Who would you like to talk to?</Text>
+          <Text
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              textAlign: "center",
+              color: "white",
+              fontWeight: "bold",
+              fontSize: 20,
+            }}
+          >
+            OR
+          </Text>
+          <Text
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              textAlign: "center",
+              color: "rgba(192, 167, 216, 1)",
+              fontWeight: "bold",
+              fontSize: 20,
+              marginTop: 20,
+            }}
+          >
+            Find your Supporter
+          </Text>
+          <Text
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              textAlign: "center",
+              color: "white",
+              fontWeight: "bold",
+              fontSize: 15,
+              marginTop: 20,
+            }}
+          >
+            Who would you like to talk to?
+          </Text>
 
-          <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 20 }}>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              marginTop: 20,
+            }}
+          >
             <TouchableOpacity
               style={{
-                alignItems: 'center',
+                alignItems: "center",
                 marginRight: 20,
               }}
-              onPress={() => handleGenderSelection('Male')}
+              onPress={() => handleGenderSelection("Male")}
             >
-              <Image source={require('../../assets/Frame.png')} style={{ width: 50, height: 50, marginBottom: 5 }} />
-              <Text style={{ color: 'white', marginTop: 5 }}>Male</Text>
+              <Image
+                source={require("../../assets/Frame.png")}
+                style={{ width: 50, height: 50, marginBottom: 5 }}
+              />
+              <Text style={{ color: "white", marginTop: 5 }}>Male</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={{
-                alignItems: 'center',
+                alignItems: "center",
               }}
-              onPress={() => handleGenderSelection('Female')}
+              onPress={() => handleGenderSelection("Female")}
             >
-              <Image source={require('../../assets/Frame2.png')} style={{ width: 50, height: 50, marginBottom: 5 }} />
-              <Text style={{ color: 'white', marginTop: 5 }}>Female</Text>
+              <Image
+                source={require("../../assets/Frame2.png")}
+                style={{ width: 50, height: 50, marginBottom: 5 }}
+              />
+              <Text style={{ color: "white", marginTop: 5 }}>Female</Text>
             </TouchableOpacity>
           </View>
 
           {selectedGender && (
             <>
-              <Text style={{ justifyContent: 'center', alignItems: 'center', textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 15, marginTop: 20 }}>What should be supporter age?</Text>
-              <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 20 }}>
+              <Text
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  textAlign: "center",
+                  color: "white",
+                  fontWeight: "bold",
+                  fontSize: 15,
+                  marginTop: 20,
+                }}
+              >
+                What should be supporter age?
+              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  marginTop: 20,
+                }}
+              >
                 <TouchableOpacity
                   style={{
-                    alignItems: 'center',
+                    alignItems: "center",
                     marginRight: 20,
                   }}
-                  onPress={() => handleSupporterAgeSelection('Button 1')}
+                  onPress={() => handleSupporterAgeSelection("Button 1")}
                 >
-                  <Image source={require('../../assets/Ellipse.png')} style={{ width: 50, height: 50, marginBottom: 5, borderRadius: 40 }} />
-                  <Image source={require('../../assets/munda.png')} style={{ width: 30, height: 30, position: 'absolute', top: 15 }} />
-                  <Text style={{ color: 'white', marginTop: 5 }}>21-30 yrs</Text>
+                  <Image
+                    source={require("../../assets/Ellipse.png")}
+                    style={{
+                      width: 50,
+                      height: 50,
+                      marginBottom: 5,
+                      borderRadius: 40,
+                    }}
+                  />
+                  <Image
+                    source={require("../../assets/munda.png")}
+                    style={{
+                      width: 30,
+                      height: 30,
+                      position: "absolute",
+                      top: 15,
+                    }}
+                  />
+                  <Text style={{ color: "white", marginTop: 5 }}>
+                    21-30 yrs
+                  </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   style={{
-                    alignItems: 'center',
+                    alignItems: "center",
                     marginRight: 20,
                   }}
-                  onPress={() => handleSupporterAgeSelection('Button 2')}
+                  onPress={() => handleSupporterAgeSelection("Button 2")}
                 >
-                  <Image source={require('../../assets/Ellipse.png')} style={{ width: 50, height: 50, marginBottom: 5, borderRadius: 40 }} />
-                  <Image source={require('../../assets/munda.png')} style={{ width: 30, height: 30, position: 'absolute', top: 15 }} />
-                  <Text style={{ color: 'white', marginTop: 5 }}>31-40 yrs</Text>
+                  <Image
+                    source={require("../../assets/Ellipse.png")}
+                    style={{
+                      width: 50,
+                      height: 50,
+                      marginBottom: 5,
+                      borderRadius: 40,
+                    }}
+                  />
+                  <Image
+                    source={require("../../assets/munda.png")}
+                    style={{
+                      width: 30,
+                      height: 30,
+                      position: "absolute",
+                      top: 15,
+                    }}
+                  />
+                  <Text style={{ color: "white", marginTop: 5 }}>
+                    31-40 yrs
+                  </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   style={{
-                    alignItems: 'center',
+                    alignItems: "center",
                   }}
-                  onPress={() => handleSupporterAgeSelection('Button 3')}
+                  onPress={() => handleSupporterAgeSelection("Button 3")}
                 >
-                  <Image source={require('../../assets/Ellipse.png')} style={{ width: 50, height: 50, marginBottom: 5, borderRadius: 40 }} />
-                  <Image source={require('../../assets/munda.png')} style={{ width: 30, height: 30, position: 'absolute', top: 15 }} />
-                  <Text style={{ color: 'white', marginTop: 5 }}> 40 yrs</Text>
+                  <Image
+                    source={require("../../assets/Ellipse.png")}
+                    style={{
+                      width: 50,
+                      height: 50,
+                      marginBottom: 5,
+                      borderRadius: 40,
+                    }}
+                  />
+                  <Image
+                    source={require("../../assets/munda.png")}
+                    style={{
+                      width: 30,
+                      height: 30,
+                      position: "absolute",
+                      top: 15,
+                    }}
+                  />
+                  <Text style={{ color: "white", marginTop: 5 }}> 40 yrs</Text>
                 </TouchableOpacity>
               </View>
 
               <TouchableOpacity
-                style={{ marginTop: 39, padding: 10, borderRadius: 5, backgroundColor: 'rgba(192, 167, 216, 1)', fontWeight: 'bold', width: '70%', alignSelf: 'center' }}
+                style={{
+                  marginTop: 39,
+                  padding: 10,
+                  borderRadius: 5,
+                  backgroundColor: "rgba(192, 167, 216, 1)",
+                  fontWeight: "bold",
+                  width: "70%",
+                  alignSelf: "center",
+                }}
               >
-                <Text style={{ color: 'white' }}>Search my Supporter</Text>
+                <Text style={{ color: "white" }}>Search my Supporter</Text>
               </TouchableOpacity>
             </>
           )}
         </View>
       </Modal>
-
-
-
-    </LinearGradient >
+    </LinearGradient>
   );
 };
 
@@ -350,7 +526,7 @@ const styles = StyleSheet.create({
   },
   list: {
     marginTop: 0,
-    width: '100%', // Adjust the width to ensure it takes the full width
+    width: "100%", // Adjust the width to ensure it takes the full width
   },
   gradient: {
     height: "115%",
@@ -373,23 +549,22 @@ const styles = StyleSheet.create({
     color: "#FFF",
     flex: 1,
     fontSize: 24,
-    justifyContent: 'center',
-    alignSelf: 'center',
-    textAlign: 'center',
+    justifyContent: "center",
+    alignSelf: "center",
+    textAlign: "center",
   },
   header2: {
     fontFamily: "Montserrat_800ExtraBold",
     color: "#FFF",
     flex: 1,
     fontSize: 24,
-    justifyContent: 'left',
-    alignSelf: 'left',
-    textAlign: 'left'
+    justifyContent: "left",
+    alignSelf: "left",
+    textAlign: "left",
   },
   proContainer: {
     marginRight: -20,
     alignSelf: "center",
-
   },
   ops: {
     borderTopLeftRadius: 40,
@@ -437,8 +612,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     paddingHorizontal: 8,
     paddingVertical: 3,
-    marginLeft: '40%'
-
+    marginLeft: "40%",
   },
   unreadCount: {
     color: "rgba(164, 122, 191, 1)",
@@ -459,50 +633,49 @@ const styles = StyleSheet.create({
   },
   popupContainer: {
     flex: 0.75,
-    justifyContent: 'center',
-    backgroundColor: 'rgba(42, 9, 85, 0.97)',
+    justifyContent: "center",
+    backgroundColor: "rgba(42, 9, 85, 0.97)",
     borderBottomLeftRadius: 40,
     borderBottomRightRadius: 40,
     padding: 20,
-    marginBottom: 'auto',
-
+    marginBottom: "auto",
   },
   popupText: {
-    color: 'white',
+    color: "white",
     fontSize: 28,
     marginBottom: 10,
-    justifyContent: 'center',
-    textAlign: 'center',
-    fontWeight: 'bold',
+    justifyContent: "center",
+    textAlign: "center",
+    fontWeight: "bold",
   },
   input: {
     height: 40,
-    color: 'white',
-    borderColor: 'white',
+    color: "white",
+    borderColor: "white",
     borderWidth: 1,
     borderRadius: 10,
     marginBottom: 10,
     padding: 5,
-    width: '100%',
+    width: "100%",
   },
   inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     borderWidth: 1,
-    borderColor: 'black',
+    borderColor: "black",
     borderRadius: 5,
     padding: 5,
-    backgroundColor: 'white'
+    backgroundColor: "white",
   },
   icon: {
-    marginBottom: 7
+    marginBottom: 7,
   },
   input: {
     flex: 1,
   },
 
   clearButton: {
-    position: 'absolute',
+    position: "absolute",
     top: 5,
     right: 10,
   },
@@ -515,57 +688,55 @@ const styles = StyleSheet.create({
   //   overflow: 'hidden', // This ensures that the child doesn't overflow the container
   // },
   previouslyContactedText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 12,
   },
   centeredImage: {
-    alignSelf: 'center',
-    marginTop: 20,  // Adjust the margin-top as needed
-    width: 45,   // Adjust the width as needed
-    height: 6,  // Adjust the height as needed
+    alignSelf: "center",
+    marginTop: 20, // Adjust the margin-top as needed
+    width: 45, // Adjust the width as needed
+    height: 6, // Adjust the height as needed
   },
   swipeIconsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    justifyContent: "space-around",
     marginTop: 10,
   },
 
   swipeIconContainer: {
-    alignItems: 'center',
+    alignItems: "center",
     marginHorizontal: 5, // Adjust the margin as needed
   },
-
 
   iconBackground: {
     width: 37, // Adjust the width as needed
     height: 37, // Adjust the height as needed
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     borderRadius: 15, // Adjust the borderRadius as needed
-    overflow: 'hidden',
+    overflow: "hidden",
   },
-
 
   swipeIcon: {
     width: 25,
     height: 25,
   },
   swipeText: {
-    color: '#FFF',
+    color: "#FFF",
     fontSize: 14,
     marginTop: 5,
-    textAlign: 'center',
+    textAlign: "center",
   },
 
   swipeSubText: {
-    color: '#FFF',
+    color: "#FFF",
     fontSize: 12,
     marginTop: 2,
-    textAlign: 'center',
+    textAlign: "center",
   },
   additionalUnreadImage: {
-    marginLeft: 'auto',
-    marginRight: 'auto',
+    marginLeft: "auto",
+    marginRight: "auto",
   },
   vectorBackground: {
     backgroundColor: "white",
@@ -625,6 +796,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingTop: 10,
     paddingRight: 40,
-  }
-
+  },
 });
