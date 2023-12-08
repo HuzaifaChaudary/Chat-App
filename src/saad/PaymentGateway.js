@@ -50,7 +50,8 @@ export default function PaymentGateway({ change, navigation }) {
       <TouchableOpacity activeOpacity={1} style={styles.Container}>
         <View style={styles.ChildContainer}>
           {CurrentComponent === 0 ? (
-            navigation.navigate("UserPayment")
+            //navigation.navigate("UserPayment")
+            <UserPayment />
           ) : CurrentComponent === 1 ? (
             <PaymentOptions change={setCurrentComponent} />
           ) : CurrentComponent === 2 ? (
@@ -63,6 +64,7 @@ export default function PaymentGateway({ change, navigation }) {
       {OpenUserSettings ? (
         <UserSettings open={OpenUserSettings} setOpen={setOpenUserSettings} />
       ) : null}
+      <Footer />
     </LinearGradient>
   );
 }

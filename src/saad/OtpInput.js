@@ -100,7 +100,7 @@ const OtpInput = ({ increment, navigation }) => {
       <View style={{ display: "flex", alignItems: "center" }}>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('Chat')
+            navigation.navigate('Chat1')
           }}
           style={{
             width: "90%",

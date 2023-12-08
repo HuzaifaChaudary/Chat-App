@@ -300,19 +300,32 @@ const screenOptionStyle = {
 
 const ChatStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={screenOptionStyle} initialRouteName="Chat1">
-      {/* <Stack.Screen name='Splash' component={Splash} options={{ headerShown: false, }} />
-            <Stack.Screen name='NumberEnter' component={NumberEnter} options={{ headerShown: false, }} />
-            <Stack.Screen name='OTP' component={OtpInput} options={{ headerShown: false, }} />
-            <Stack.Screen name='Home' component={Home} options={{ headerShown: false, }} /> */}
-      {/* <Stack.Screen name='Chat1' component={BottomTabNavigator} options={{ headerShown: false, }} /> */}
-
+    <Stack.Navigator screenOptions={screenOptionStyle} >
+      <Stack.Screen
+        name="Splash"
+        component={Splash}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="NumberEnter"
+        component={NumberEnter}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="OTP"
+        component={OtpInput}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="Chat1"
         component={BottomTabBar}
         options={{ headerShown: false }}
       />
-
       <Stack.Screen
         name="Discussion"
         component={Discussion}
@@ -338,13 +351,11 @@ const ChatStackNavigator = () => {
         component={Profile}
         options={{ headerShown: false }}
       />
-
       <Stack.Screen
         name="Chat"
         component={Chat}
         options={{ headerShown: false }}
       />
-
       <Stack.Screen
         name="UserPayment"
         component={UserPayment}
